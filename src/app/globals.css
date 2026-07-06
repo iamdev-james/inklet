@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+  --color-void: #05060a;
+  --color-panel: #0a0b12;
+  --color-card: #10111a;
+  --color-card-deep: #171827;
+  --color-line: rgba(240, 240, 244, 0.09);
+  --color-line-strong: rgba(240, 240, 244, 0.16);
+  --color-ink: #f2f2f4;
+  --color-ink-soft: #9a9ba8;
+  --color-ink-faint: #5c5d6a;
+  --color-accent: #ff4d00;
+  --color-accent-deep: #d64200;
+  --color-accent-soft: #ff7a40;
+  --color-positive: #12d56f;
+  --font-display: var(--font-inter), system-ui, sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-brand: var(--font-fraunces), Georgia, serif;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-void);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Embossed dark-clay surfaces for the hero collage and floating props */
+.clay {
+  background: linear-gradient(148deg, #191a24 0%, #101018 55%, #0b0c12 100%);
+  border: 1px solid rgba(255, 255, 255, 0.055);
+  box-shadow:
+    inset 1px 1.5px 0 rgba(255, 255, 255, 0.07),
+    inset -8px -14px 28px rgba(0, 0, 0, 0.55),
+    18px 30px 60px rgba(0, 0, 0, 0.55);
+}
+
+.clay-inset {
+  background: linear-gradient(148deg, #0a0b10 0%, #0e0f16 100%);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow:
+    inset 6px 10px 24px rgba(0, 0, 0, 0.6),
+    inset -1px -1.5px 0 rgba(255, 255, 255, 0.05);
+}
+
+.engraved {
+  color: rgba(242, 242, 244, 0.22);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);
+}
+
+.led {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.14em;
+  color: var(--color-positive);
+  text-shadow:
+    0 0 10px rgba(18, 213, 111, 0.7),
+    0 0 26px rgba(18, 213, 111, 0.3);
+}
+
+.star {
+  position: absolute;
+  border-radius: 9999px;
+  background: #f2f2f4;
+  animation: twinkle 4.5s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.hero-vignette {
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 38%, rgba(5, 6, 10, 0.82) 0%, rgba(5, 6, 10, 0.35) 55%, rgba(5, 6, 10, 0) 100%),
+    linear-gradient(to bottom, rgba(5, 6, 10, 0.6), rgba(5, 6, 10, 0) 30%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .star {
+    animation: none;
+    opacity: 0.4;
+  }
+}
