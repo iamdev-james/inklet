@@ -44,33 +44,75 @@ function humanSize(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+function FoldingSheet({ reduced }: { reduced: boolean }) {
+  return (
+    <div className="shrink-0" style={{ perspective: 220 }}>
+      <motion.div
+        className="clay relative h-9 w-7 rounded-md"
+        animate={reduced ? undefined : { rotateY: [0, 180, 360] }}
+        transition={{ duration: 1.7, repeat: Infinity, ease: [0.45, 0, 0.55, 1] }}
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        <div className="absolute top-0 right-0 h-0 w-0 rounded-tr-md border-t-10 border-l-10 border-t-card-deep border-l-transparent" />
+        <div className="absolute top-3 left-1.5 h-0.5 w-3 rounded bg-ink/25" />
+        <div className="absolute top-4.5 left-1.5 h-0.5 w-4 rounded bg-ink/20" />
+        <div className="absolute bottom-1.5 left-1.5 h-1 w-2.5 rounded-xs bg-accent/80" />
+      </motion.div>
+    </div>
+  );
+}
+
+function ThinkingDots({ reduced }: { reduced: boolean }) {
+  return (
+    <span className="ml-1 inline-flex gap-0.5" aria-hidden>
+      {[0, 1, 2].map((index) => (
+        <motion.span
+          key={index}
+          className="h-1 w-1 rounded-full bg-ink-soft"
+          animate={reduced ? undefined : { opacity: [0.2, 1, 0.2] }}
+          transition={{ duration: 1.2, delay: index * 0.2, repeat: Infinity, ease: "easeInOut" }}
+        />
+      ))}
+    </span>
+  );
+}
+
 function FoldProgress({ progress, reduced }: { progress: number; reduced: boolean }) {
   const stage = STAGE_LABELS[progress < 34 ? 0 : progress < 72 ? 1 : 2];
   return (
-    <div className="flex w-full flex-col gap-3" role="status" aria-live="polite">
-      <div className="clay-inset relative h-14 overflow-hidden rounded-full">
-        <motion.div
-          className="absolute inset-y-1 left-1 rounded-full bg-linear-to-r from-accent-deep to-accent"
-          initial={{ width: "0%" }}
-          animate={{ width: `calc(${progress}% - 8px)` }}
-          transition={reduced ? { duration: 0.2 } : { type: "spring", stiffness: 60, damping: 20 }}
-        />
-        {!reduced && (
-          <motion.div
-            className="absolute inset-y-1 w-12"
-            initial={{ left: "0%" }}
-            animate={{ left: `calc(${progress}% - 3rem)` }}
-            transition={{ type: "spring", stiffness: 60, damping: 20 }}
-          >
-            <div className="absolute inset-y-0 right-0 w-12 rounded-r-full bg-linear-to-l from-white/25 to-transparent" />
-          </motion.div>
-        )}
-        <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold tracking-[0.2em] text-ink uppercase mix-blend-difference">
-          {stage}…
+    <div
+      className="flex w-full flex-col gap-4 px-2 pt-1 pb-2 sm:px-3"
+      role="status"
+      aria-live="polite"
+    >
+      <div className="flex items-center gap-4">
+        <FoldingSheet reduced={reduced} />
+        <p className="flex items-baseline text-[15px] font-medium text-ink">
+          {stage}
+          <ThinkingDots reduced={reduced} />
+        </p>
+        <span className="ml-auto font-mono text-sm font-bold text-ink-soft tabular-nums">
+          {Math.min(99, Math.round(progress))}%
         </span>
       </div>
+      <div className="clay-inset relative h-2 overflow-hidden rounded-full">
+        <motion.div
+          className="absolute inset-y-0 left-0 rounded-full bg-linear-to-r from-accent-deep via-accent to-accent-soft shadow-[0_0_14px_rgba(255,77,0,0.55)]"
+          initial={{ width: "0%" }}
+          animate={{ width: `${progress}%` }}
+          transition={reduced ? { duration: 0.2 } : { type: "spring", stiffness: 60, damping: 20 }}
+        >
+          {!reduced && (
+            <motion.span
+              className="absolute inset-y-0 right-0 w-10 rounded-full bg-linear-to-l from-white/40 to-transparent"
+              animate={{ opacity: [0.4, 1, 0.4] }}
+              transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+            />
+          )}
+        </motion.div>
+      </div>
       <p className="text-center text-xs text-ink-faint">
-        Most pages take a few seconds. Slow sites can take up to a minute.
+        Most pages take a few seconds — slow sites can need up to a minute.
       </p>
     </div>
   );
@@ -227,7 +269,9 @@ export function HeroConverter() {
         <motion.div
           layout={!reduced}
           className={`border border-line bg-panel/80 shadow-[0_24px_80px_rgba(0,0,0,0.6)] backdrop-blur-sm transition-[border-color,box-shadow] duration-200 focus-within:border-line-strong focus-within:shadow-[0_24px_80px_rgba(0,0,0,0.6),0_0_0_4px_rgba(255,77,0,0.12)] ${
-            phase.name === "success" ? "rounded-3xl p-5" : "rounded-3xl p-2 sm:rounded-full"
+            phase.name === "success" || phase.name === "converting"
+              ? "rounded-3xl p-5"
+              : "rounded-3xl p-2 sm:rounded-full"
           }`}
         >
           <AnimatePresence mode="wait" initial={false}>
@@ -280,7 +324,6 @@ export function HeroConverter() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                className="p-2 sm:p-0"
               >
                 <FoldProgress progress={progress} reduced={reduced} />
               </motion.div>

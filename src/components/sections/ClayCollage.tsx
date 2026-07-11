@@ -1,9 +1,10 @@
 "use client";
 // Client component: the hero collage is an animation surface — clay props float on
-// slow loops and drift a few pixels against pointer movement.
+// slow loops, drift a few pixels against pointer movement, and the whole scene
+// zooms toward the camera as the hero sheet scrolls away.
 
-import { motion, useReducedMotion, useSpring } from "motion/react";
-import { useEffect } from "react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { useEffect, useRef } from "react";
 
 function Float({
   children,
@@ -44,8 +45,15 @@ function MiniDocLines() {
 
 export function ClayCollage() {
   const reduced = useReducedMotion() ?? false;
+  const stageRef = useRef<HTMLDivElement>(null);
   const driftX = useSpring(0, { stiffness: 40, damping: 20 });
   const driftY = useSpring(0, { stiffness: 40, damping: 20 });
+
+  const { scrollYProgress } = useScroll({
+    target: stageRef,
+    offset: ["start start", "end start"],
+  });
+  const zoom = useTransform(scrollYProgress, [0, 1], [1, reduced ? 1 : 1.3]);
 
   useEffect(() => {
     if (reduced) return;
@@ -58,8 +66,8 @@ export function ClayCollage() {
   }, [driftX, driftY, reduced]);
 
   return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      <motion.div style={{ x: driftX, y: driftY }} className="absolute -inset-6">
+    <div ref={stageRef} aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      <motion.div style={{ x: driftX, y: driftY, scale: zoom }} className="absolute -inset-6">
         <Float className="top-[14%] right-[6%] hidden lg:block" duration={8} reduced={reduced}>
           <div className="clay flex h-11 w-64 rotate-3 items-center gap-2 rounded-xl px-3">
             <span className="h-2 w-2 rounded-full bg-ink/15" />
