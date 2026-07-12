@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 out/
+
+# chrome extension build output
+extension/dist/
