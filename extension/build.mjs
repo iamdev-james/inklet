@@ -1,5 +1,4 @@
 import { rm, mkdir, copyFile, readdir } from "node:fs/promises";
-import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { build } from "vite";
@@ -52,13 +51,11 @@ await bundle("src/popup/popup.ts", "popup.js", "es");
 await bundle("src/print/print.ts", "print.js", "es");
 await bundle("src/background/background.ts", "background.js", "es");
 
-await copyFile(path.join(dir, "manifest.json"), path.join(outDir, "manifest.json"));
-await copyFile(path.join(dir, "index.html"), path.join(outDir, "index.html"));
-await copyFile(path.join(dir, "print.html"), path.join(outDir, "print.html"));
+const staticDir = path.join(dir, "static");
+await copyFile(path.join(staticDir, "manifest.json"), path.join(outDir, "manifest.json"));
+await copyFile(path.join(staticDir, "index.html"), path.join(outDir, "index.html"));
+await copyFile(path.join(staticDir, "print.html"), path.join(outDir, "print.html"));
 await copyFile(path.join(dir, "src/popup/popup.css"), path.join(outDir, "popup.css"));
+await copyDir(path.join(staticDir, "icons"), path.join(outDir, "icons"));
 
-if (existsSync(path.join(dir, "icons"))) {
-  await copyDir(path.join(dir, "icons"), path.join(outDir, "icons"));
-}
-
-console.log("✓ extension built → extension/dist");
+console.log("✓ extension built → extension/dist  (load THIS folder as unpacked)");

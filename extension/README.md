@@ -75,9 +75,14 @@ HTML, CSS, and icons into `dist/`.
 
 1. `pnpm ext:build`
 2. Open `chrome://extensions`, enable **Developer mode**.
-3. **Load unpacked** → select `extension/dist`.
+3. **Load unpacked** → select **`extension/dist`** — the compiled folder, **not**
+   `extension/` itself. (The source folder has no built `background.js`, so Chrome
+   rejects it with "Could not load manifest.")
 4. Open any article, click the Offprint icon (or press **Alt+Shift+O**), pick a
    format. MD/DOCX land in Downloads; PDF opens a print-ready tab.
+
+`extension/dist` is gitignored — always run `pnpm ext:build` first (or after any
+change).
 
 ## Known limits (v1)
 
