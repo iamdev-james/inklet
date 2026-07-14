@@ -1,6 +1,4 @@
 "use client";
-// Client component: animation section — quote text lights up word by word as the
-// visitor scrolls through the pinned card.
 
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { useRef } from "react";

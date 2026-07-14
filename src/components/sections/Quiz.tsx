@@ -1,7 +1,4 @@
 "use client";
-// Client component: animation section — the answer cards fling off their slots
-// with a swipe-style spring when the visitor picks one, then respawn so the
-// deck can be played endlessly.
 
 import { AnimatePresence, motion, useReducedMotion, type Variants } from "motion/react";
 import { useEffect, useRef, useState } from "react";

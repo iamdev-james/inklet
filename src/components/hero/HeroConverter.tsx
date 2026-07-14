@@ -1,13 +1,11 @@
 "use client";
-// Client component: the hero converter is the interactive product surface — it owns
-// form state, posts to /api/convert, triggers the blob download, and animates the
-// conversion moment. Everything around it stays server-rendered.
 
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { SegmentedControl } from "@/components/ui/SegmentedControl";
 import { ERROR_COPY, isConversionErrorCode, type ConversionErrorCode } from "@/lib/errors";
+import { CHROME_WEB_STORE_URL } from "@/lib/links";
 import type { OutputFormat } from "@/lib/types";
 import { convertRequestSchema, parseHttpUrl } from "@/lib/validation";
 
@@ -314,7 +312,15 @@ export function HeroConverter() {
                 </div>
                 <p className="border-t border-line pt-3 text-xs text-ink-faint">
                   One click next time —{" "}
-                  <span className="font-semibold text-ink-soft">Chrome extension coming soon.</span>
+                  <a
+                    href={CHROME_WEB_STORE_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-semibold text-ink-soft underline decoration-accent underline-offset-2 hover:text-ink"
+                  >
+                    get the Chrome extension
+                  </a>
+                  .
                 </p>
               </motion.div>
             ) : phase.name === "converting" ? (

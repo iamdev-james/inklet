@@ -11,7 +11,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "prettier --write .",
-    "convert": "tsx scripts/convert.ts"
+    "convert": "tsx scripts/convert.ts",
+    "ext:build": "node extension/build.mjs",
+    "ext:pack": "node extension/build.mjs && node extension/pack.mjs",
+    "ext:typecheck": "tsc --noEmit -p extension/tsconfig.json"
   },
   "dependencies": {
     "@mozilla/readability": "0.6.0",
@@ -29,6 +32,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4.3.2",
+    "@types/chrome": "^0.2.2",
     "@types/jsdom": "28.0.3",
     "@types/node": "20.19.43",
     "@types/react": "19.2.17",
@@ -41,6 +45,7 @@
     "tailwindcss": "4.3.2",
     "tsx": "4.23.0",
     "typescript": "5.9.3",
+    "vite": "8.1.3",
     "vitest": "4.1.10"
   }
 }
