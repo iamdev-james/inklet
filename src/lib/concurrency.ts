@@ -1,8 +1,3 @@
-// The monolith's pressure valve: Playwright renders all run in this one
-// process, so at most `maxConcurrent` conversions hold a browser at a time.
-// Up to `maxQueued` more wait `queueTimeoutMs` for a slot; anything beyond
-// that is turned away immediately with a busy response instead of piling up.
-
 export class BusyError extends Error {
   constructor(message: string) {
     super(message);

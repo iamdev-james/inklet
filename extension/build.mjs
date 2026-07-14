@@ -16,7 +16,6 @@ const shared = {
   logLevel: "warn",
 };
 
-/** One Rollup entry per extension surface; each is fully self-contained. */
 async function bundle(entry, fileName, format, name) {
   await build({
     ...shared,

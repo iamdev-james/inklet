@@ -4,8 +4,6 @@ import type { ExtractedDocument } from "@/lib/types";
 const MIN_TEXT_LENGTH = 250;
 const MIN_CONFIDENCE = 0.25;
 
-// Comment threads and engagement widgets Readability keeps when they sit inside
-// the article container. Container-level selectors only — never bare ".comment".
 const CLUTTER_SELECTORS = [
   "#comments",
   "#comments-section",

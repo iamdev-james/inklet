@@ -1,6 +1,4 @@
 "use client";
-// Client component: animation section — the product frame rises with scroll
-// parallax while proof chips float over it.
 
 import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";

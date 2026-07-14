@@ -6,16 +6,10 @@ import type { ExtractedDocument, RenderedPage } from "@/lib/types";
 const MIN_TEXT_LENGTH = 250;
 const MIN_CONFIDENCE = 0.25;
 
-// When standard extraction keeps less than this share of a text-rich page,
-// the article was probably pruned for link density (list posts, link roundups)
-// and a lenient second pass is worth trying.
 const LOW_RETENTION = 0.3;
 const RETRY_MIN_BODY_CHARS = 3_000;
 const LENIENT_LINK_DENSITY_MODIFIER = 0.8;
 
-// Comment threads and engagement widgets that survive Readability when they sit
-// inside the article container. Container-level selectors only — never bare
-// ".comment", which would match syntax-highlight spans inside code blocks.
 const CLUTTER_SELECTORS = [
   "#comments",
   "#comments-section",
@@ -43,8 +37,6 @@ const CLUTTER_SELECTORS = [
   ".newsletter-signup",
 ] as const;
 
-// Sites without semantic comment markup still label the section with a heading.
-// Exact-match patterns only, so an article that merely mentions comments survives.
 const COMMENT_HEADING_PATTERNS = [
   /^(comments?|responses?|discussion|conversation)(\s*\(\d[\d,.]*\s*k?\))?$/i,
   /^\d[\d,.]*\s*k?\s+(comments?|responses?|replies)$/i,
@@ -106,8 +98,6 @@ function runReadability(page: RenderedPage, linkDensityModifier: number): Extrac
   stripClutter(document);
   truncateAtCommentsHeading(document.body);
 
-  // linkDensityModifier is supported by Readability 0.6 at runtime but missing
-  // from its published types.
   const options = { keepClasses: false, linkDensityModifier } as NonNullable<
     ConstructorParameters<typeof Readability<string>>[1]
   >;

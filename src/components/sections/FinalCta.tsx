@@ -1,6 +1,4 @@
 "use client";
-// Client component: animation section — the closing collage staggers in as it
-// scrolls into view.
 
 import { motion, useReducedMotion } from "motion/react";
 import { CHROME_WEB_STORE_URL } from "@/lib/links";

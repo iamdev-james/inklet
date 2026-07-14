@@ -1,7 +1,4 @@
 "use client";
-// Client component: the hero converter is the interactive product surface — it owns
-// form state, posts to /api/convert, triggers the blob download, and animates the
-// conversion moment. Everything around it stays server-rendered.
 
 import { AnimatePresence, MotionConfig, motion, useReducedMotion } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";

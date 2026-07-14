@@ -1,7 +1,5 @@
 import type { ExtractedDocument } from "@/lib/types";
 
-// Short-lived hand-off between the popup and the print page. Nothing is
-// persisted — the entry is deleted the moment the print page reads it.
 const printJobs = new Map<string, ExtractedDocument>();
 
 chrome.runtime.onMessage.addListener((message: unknown, _sender, sendResponse) => {

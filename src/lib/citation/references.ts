@@ -120,9 +120,6 @@ export function collectReferences(
     ctx,
   );
 
-  // Pages whose reference links live in card sections that extraction prunes
-  // (corporate and docs sites) get a stricter second harvest from the page's
-  // main region, skipping navigation chrome.
   if (references.length < MIN_CONTENT_REFERENCES && pageHtml) {
     const pageDom = quietDom(pageHtml);
     const { document } = pageDom.window;

@@ -1,6 +1,4 @@
 "use client";
-// Client component: animation section — the statement sharpens into view on
-// scroll, bento cards stagger in, and the clock card ticks live.
 
 import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";

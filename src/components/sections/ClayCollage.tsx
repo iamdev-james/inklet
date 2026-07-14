@@ -1,7 +1,4 @@
 "use client";
-// Client component: the hero collage is an animation surface — clay props float on
-// slow loops, drift a few pixels against pointer movement, and the whole scene
-// zooms toward the camera as the hero sheet scrolls away.
 
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { useEffect, useRef } from "react";
