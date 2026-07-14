@@ -7,6 +7,7 @@ import { ProductShot } from "@/components/sections/ProductShot";
 import { Quiz } from "@/components/sections/Quiz";
 import { Quotes } from "@/components/sections/Quotes";
 import { StatementBento } from "@/components/sections/StatementBento";
+import { CHROME_WEB_STORE_URL } from "@/lib/links";
 
 const NAV_LINKS = [
   ["How it works", "#how"],
@@ -37,14 +38,14 @@ export default function Home() {
               ))}
             </ul>
           </nav>
-          <button
-            type="button"
-            disabled
-            title="Coming soon"
-            className="cursor-not-allowed rounded-full border border-line px-4 py-2 text-xs font-semibold tracking-wide text-ink-faint"
+          <a
+            href={CHROME_WEB_STORE_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full border border-line-strong px-4 py-2 text-xs font-semibold tracking-wide text-ink transition-colors hover:border-accent hover:text-accent-soft"
           >
-            Add to Chrome — soon
-          </button>
+            Add to Chrome — Free
+          </a>
         </div>
       </header>
 

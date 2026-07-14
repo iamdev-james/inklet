@@ -13,6 +13,7 @@
     "format": "prettier --write .",
     "convert": "tsx scripts/convert.ts",
     "ext:build": "node extension/build.mjs",
+    "ext:pack": "node extension/build.mjs && node extension/pack.mjs",
     "ext:typecheck": "tsc --noEmit -p extension/tsconfig.json"
   },
   "dependencies": {

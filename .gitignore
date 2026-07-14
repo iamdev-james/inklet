@@ -43,3 +43,4 @@ out/
 
 # chrome extension build output
 extension/dist/
+extension/offprint-extension.zip

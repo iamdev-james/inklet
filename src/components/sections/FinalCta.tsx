@@ -3,6 +3,7 @@
 // scrolls into view.
 
 import { motion, useReducedMotion } from "motion/react";
+import { CHROME_WEB_STORE_URL } from "@/lib/links";
 
 function Collage() {
   const reduced = useReducedMotion() ?? false;
@@ -108,14 +109,14 @@ export function FinalCta() {
             >
               Convert a page <span aria-hidden>↑</span>
             </a>
-            <button
-              type="button"
-              disabled
-              title="Coming soon"
-              className="cursor-not-allowed rounded-full border border-line px-6 py-3.5 text-sm font-semibold text-ink-faint"
+            <a
+              href={CHROME_WEB_STORE_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="rounded-full border border-line-strong px-6 py-3.5 text-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent-soft"
             >
-              Add to Chrome — soon
-            </button>
+              Add to Chrome — Free
+            </a>
           </motion.div>
         </div>
         <Collage />

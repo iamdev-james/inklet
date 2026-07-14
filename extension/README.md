@@ -84,6 +84,33 @@ HTML, CSS, and icons into `dist/`.
 `extension/dist` is gitignored — always run `pnpm ext:build` first (or after any
 change).
 
+## Publish to the Chrome Web Store
+
+```bash
+pnpm ext:pack     # builds, then zips → extension/offprint-extension.zip
+```
+
+1. **Register** a Chrome Web Store developer account at
+   <https://chrome.google.com/webstore/devconsole> (one-time US $5 fee).
+2. **Create item** → upload `extension/offprint-extension.zip`.
+3. **Fill the listing**: name, summary, a detailed description, at least one
+   1280×800 (or 640×400) screenshot, the 128px icon (already in the zip), and a
+   category (Productivity).
+4. **Privacy**: declare the single-purpose ("convert the current page to a
+   file"), justify each permission (activeTab/scripting to read the page you're
+   on, downloads to save the file), and link a privacy policy. Offprint stores
+   and transmits nothing — say exactly that. No data-collection disclosures are
+   needed because none is collected.
+5. **Submit for review.** MV3 items with this permission set usually clear in a
+   few days.
+6. **After approval**, copy the listing URL
+   (`https://chromewebstore.google.com/detail/<id>`) into the landing page:
+   set `NEXT_PUBLIC_CHROME_STORE_URL` in the web app's environment (see
+   `src/lib/links.ts`). The "Add to Chrome" buttons already point at it.
+
+To bump a release: raise `version` in `static/manifest.json`, `pnpm ext:pack`,
+and upload the new zip.
+
 ## Known limits (v1)
 
 - **PDF** uses the browser's print dialog (Save as PDF) rather than a silent
